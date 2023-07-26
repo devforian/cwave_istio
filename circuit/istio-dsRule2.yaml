@@ -1,0 +1,12 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: dr-hello
+spec:
+  host: svc-hello
+  trafficPolicy:
+    outlierDetection:
+      interval: 1s # 1초마다 확인해서
+      consecutive5xxErrors: 1 # 5XX 에러가 발생하면
+      baseEjectionTime: 3m # 3분동안 로드밸런싱 풀에서 제외 함
+      maxEjectionPercent: 100 # Default 10%,  최대 Eject 퍼센티지이며 100% 이면 서비스가 바라보는 모든 로드밸런싱 풀이 제외 될 수 있음.
